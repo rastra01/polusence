@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "758354862670",
+    "firebase_url": "https://coba1-f9374-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "coba1-f9374",
+    "storage_bucket": "coba1-f9374.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:758354862670:android:b6682273c871bc740c191f",
+        "android_client_info": {
+          "package_name": "com.example.coba2"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "758354862670-hed55nobbg6g8iv3s06hsadeu2d39vmc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD1R9iEacFGrs0xT1iT1woGpbLmjauBygs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "758354862670-hed55nobbg6g8iv3s06hsadeu2d39vmc.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "758354862670-cv8ea9unuso5f1vgonfhr6s892c5vquu.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.coba2"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
