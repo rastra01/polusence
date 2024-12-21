@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_database/firebase_database.dart'; // Import untuk Realtime Database
-import 'main.dart'; // Halaman Kualitas Udara
+import '../main.dart'; // Halaman Kualitas Udara
 import 'lengkapiprofile.dart'; // Halaman Lengkapi Akun
 import 'signup.dart'; // Halaman Sign Up
 

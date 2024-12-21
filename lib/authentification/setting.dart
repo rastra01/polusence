@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'account.dart'; // Sesuaikan dengan nama file SignUp Anda
-import 'contact_us.dart'; // Jika ada halaman Contact Us
-import 'terms_conditions.dart'; // Jika ada halaman Terms & Conditions
-import 'privacy_policy.dart'; // Jika ada halaman Privacy Policy
-import 'about.dart'; // Jika ada halaman About
+import '../contact_us.dart'; // Jika ada halaman Contact Us
+import '../terms_conditions.dart'; // Jika ada halaman Terms & Conditions
+import '../privacy_policy.dart'; // Jika ada halaman Privacy Policy
+import '../about.dart'; // Jika ada halaman About
 
 class SettingsPage extends StatefulWidget {
   const SettingsPage({Key? key}) : super(key: key);

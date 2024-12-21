@@ -5,7 +5,7 @@ import 'package:firebase_database/firebase_database.dart';
 import 'home.dart'; // Halaman Kualitas Udara
 import 'statistik.dart'; // Halaman Statistik
 import 'chalenge.dart'; // Halaman Tantangan
-import 'setting.dart'; // Halaman Pengaturan
+import 'authentification/setting.dart'; // Halaman Pengaturan
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

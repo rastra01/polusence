@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'main.dart'; // Pastikan ini adalah path yang benar
+import '../main.dart'; // Pastikan ini adalah path yang benar
 
 class Lengkapiprofile extends StatefulWidget {
   final String email; // Menyimpan email pengguna

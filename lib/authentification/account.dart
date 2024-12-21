@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
-import 'general_info.dart';
+import '../general_info.dart';
+import 'edit_profile.dart';
+import 'setting.dart'; // Pastikan Anda sudah memiliki halaman ini
 
 class AccountPage extends StatefulWidget {
   @override
@@ -23,31 +25,18 @@ class _AccountPageState extends State<AccountPage> {
     User? currentUser = FirebaseAuth.instance.currentUser;
 
     if (currentUser != null) {
-      print(
-          "Current User UID: ${currentUser.uid}"); // Debugging: menampilkan UID pengguna
       final ref = FirebaseDatabase.instance.ref('users/${currentUser.uid}');
       final snapshot = await ref.once();
 
-      print(
-          'Snapshot value: ${snapshot.snapshot.value}'); // Debugging: menampilkan isi snapshot
-
       if (snapshot.snapshot.value != null) {
-        if (snapshot.snapshot.value is Map) {
-          Map<String, dynamic> data =
-              Map<String, dynamic>.from(snapshot.snapshot.value as Map);
-          setState(() {
-            fullName = data['fullName'];
-            gender = data['gender'];
-            phone = data['phone'];
-          });
-        } else {
-          print('Data tidak dalam format Map');
-        }
-      } else {
-        print('Snapshot tidak ada');
+        Map<String, dynamic> data =
+            Map<String, dynamic>.from(snapshot.snapshot.value as Map);
+        setState(() {
+          fullName = data['fullName'];
+          gender = data['gender'];
+          phone = data['phone'];
+        });
       }
-    } else {
-      print('Pengguna tidak terautentikasi');
     }
   }
 
@@ -58,11 +47,16 @@ class _AccountPageState extends State<AccountPage> {
         title: const Text("Akun Saya"),
         backgroundColor: Colors.white,
         elevation: 0,
-        centerTitle: false,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Colors.black),
+          icon: const Icon(Icons.settings,
+              color: Colors.black), // Ganti ikon menjadi ikon pengaturan
           onPressed: () {
-            Navigator.pop(context); // Kembali ke halaman sebelumnya
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) =>
+                      SettingsPage()), // Pindah ke halaman pengaturan
+            );
           },
         ),
       ),
@@ -70,11 +64,17 @@ class _AccountPageState extends State<AccountPage> {
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
-            // User Card
             GestureDetector(
-              onTap: () {
-                // Aksi ketika card ditekan
-                print("Card ditekan"); // Debugging untuk memastikan responsif
+              onTap: () async {
+                await Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => EditProfileScreen(
+                      onProfileUpdated: fetchUserProfile,
+                    ),
+                  ),
+                );
+                fetchUserProfile(); // Fetch updated profile data after returning
               },
               child: Container(
                 padding: const EdgeInsets.all(16.0),
@@ -86,16 +86,14 @@ class _AccountPageState extends State<AccountPage> {
                   children: [
                     CircleAvatar(
                       radius: 30,
-                      backgroundImage: AssetImage(
-                          'assets/profile_picture.png'), // Ganti dengan asset Anda
+                      backgroundImage: AssetImage('assets/profile_picture.png'),
                     ),
                     const SizedBox(width: 16),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          fullName ??
-                              'Nama tidak tersedia', // Menggunakan Null Check
+                          fullName ?? 'Nama tidak tersedia',
                           style: const TextStyle(
                             color: Colors.white,
                             fontSize: 18,
@@ -104,14 +102,14 @@ class _AccountPageState extends State<AccountPage> {
                         ),
                         const SizedBox(height: 4),
                         Text(
-                          "Gender - ${gender ?? 'Tidak diketahui'}", // Menggunakan Null Check
+                          "Gender - ${gender ?? 'Tidak diketahui'}",
                           style: const TextStyle(
                             color: Colors.white70,
                             fontSize: 14,
                           ),
                         ),
                         Text(
-                          "Phone - ${phone ?? 'Tidak tersedia'}", // Menggunakan Null Check
+                          "Phone - ${phone ?? 'Tidak tersedia'}",
                           style: const TextStyle(
                             color: Colors.white70,
                             fontSize: 14,
@@ -124,7 +122,6 @@ class _AccountPageState extends State<AccountPage> {
               ),
             ),
             const SizedBox(height: 24),
-            // Account Details
             const Align(
               alignment: Alignment.centerLeft,
               child: Text(
