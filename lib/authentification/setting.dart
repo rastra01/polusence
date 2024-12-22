@@ -1,3 +1,4 @@
+import 'package:coba2/penukaranPoin.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'account.dart'; // Sesuaikan dengan nama file SignUp Anda
@@ -49,8 +50,15 @@ class _SettingsPageState extends State<SettingsPage> {
             ),
             SettingsTile(
               icon: Icons.solar_power,
-              title: 'Solar Details',
-              onTap: () => handleTap('Solar Details'),
+              title: 'Penukaran Poin',
+              onTap: () {
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => PenukaranPoinPage(), // Halaman Sign Up
+                  ),
+                );
+              },
             ),
             SettingsTile(
               icon: Icons.mail_outline,
