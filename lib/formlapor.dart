@@ -37,16 +37,15 @@ class _ReportPageState extends State<ReportPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white, // Mengatur background ke putih
+      backgroundColor: Colors.white,
       appBar: AppBar(
         title: const Text('Lapor'),
-        backgroundColor: Colors.white, // Latar belakang AppBar
-        iconTheme:
-            const IconThemeData(color: Colors.black), // Warna ikon kembali
+        backgroundColor: Colors.white,
+        iconTheme: const IconThemeData(color: Colors.black),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () {
-            Navigator.of(context).pop(); // Kembali ke halaman sebelumnya
+            Navigator.of(context).pop();
           },
         ),
       ),
@@ -55,20 +54,17 @@ class _ReportPageState extends State<ReportPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Image with Back Button
             Stack(
               children: [
                 Center(
                   child: Image.asset(
-                    'assets/environment_login.png', // Ganti dengan path aset Anda
+                    'assets/environment_login.png',
                     height: 200,
                   ),
                 ),
               ],
             ),
             const SizedBox(height: 16.0),
-
-            // Dropdown for report type
             const Text('Jenis Laporan',
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16.0)),
             const SizedBox(height: 8.0),
@@ -92,10 +88,7 @@ class _ReportPageState extends State<ReportPage> {
                 hintText: 'Pilih jenis laporan',
               ),
             ),
-
             const SizedBox(height: 16.0),
-
-            // Text field for description
             const Text('Deskripsi',
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16.0)),
             const SizedBox(height: 8.0),
@@ -107,10 +100,7 @@ class _ReportPageState extends State<ReportPage> {
                 hintText: 'Masukkan deskripsi tentang laporan polusi',
               ),
             ),
-
             const SizedBox(height: 16.0),
-
-            // Text field for location
             const Text('Lokasi',
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16.0)),
             const SizedBox(height: 8.0),
@@ -121,10 +111,7 @@ class _ReportPageState extends State<ReportPage> {
                 hintText: 'Masukkan lokasi laporan',
               ),
             ),
-
             const SizedBox(height: 16.0),
-
-            // File attachment
             const Text('Lampiran (Opsional)',
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16.0)),
             const SizedBox(height: 8.0),
@@ -145,13 +132,10 @@ class _ReportPageState extends State<ReportPage> {
                 ),
               ],
             ),
-
             const SizedBox(height: 16.0),
-
-            // Submit button
             Center(
               child: ElevatedButton(
-                onPressed: _submitReport, // Panggil fungsi untuk menyimpan data
+                onPressed: _submitReport,
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.green,
                   padding: const EdgeInsets.symmetric(
@@ -160,10 +144,7 @@ class _ReportPageState extends State<ReportPage> {
                 child: const Text('Submit', style: TextStyle(fontSize: 16.0)),
               ),
             ),
-
             const SizedBox(height: 16.0),
-
-            // Contact info
             Center(
               child: const Text(
                 'Nomor Kontak Pihak Berwenang:\nCall Center Lingkungan Hidup: 0800-123-1234\nCall Center Polisi: 110',
@@ -179,9 +160,20 @@ class _ReportPageState extends State<ReportPage> {
 
   // Fungsi untuk menyimpan laporan ke Realtime Database
   Future<void> _submitReport() async {
-    DatabaseReference reportRef = FirebaseDatabase.instance
-        .ref("formlapor")
-        .push(); // Referensi baru untuk laporan
+    User? user =
+        FirebaseAuth.instance.currentUser; // Ambil UID pengguna yang login
+    if (user == null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Silahkan login terlebih dahulu')),
+      );
+      return; // Hentikan jika pengguna tidak terautentikasi
+    }
+
+    // Membuat ID unik untuk laporan baru
+    String reportId = DateTime.now().millisecondsSinceEpoch.toString();
+
+    DatabaseReference reportRef = FirebaseDatabase.instance.ref(
+        "formlapor/${user.uid}/$reportId"); // Simpan di bawah UID pengguna dengan ID laporan unik
 
     try {
       await reportRef.set({

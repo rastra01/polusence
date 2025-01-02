@@ -1,11 +1,11 @@
-import 'package:coba2/penukaranPoin.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'account.dart'; // Sesuaikan dengan nama file SignUp Anda
+import 'account.dart'; // Sesuaikan dengan nama file Account Anda
 import '../contact_us.dart'; // Jika ada halaman Contact Us
 import '../terms_conditions.dart'; // Jika ada halaman Terms & Conditions
 import '../privacy_policy.dart'; // Jika ada halaman Privacy Policy
 import '../about.dart'; // Jika ada halaman About
+import 'package:coba2/penukaranPoin.dart'; // Sesuaikan dengan nama file PenukaranPoin
 
 class SettingsPage extends StatefulWidget {
   const SettingsPage({Key? key}) : super(key: key);
@@ -40,10 +40,14 @@ class _SettingsPageState extends State<SettingsPage> {
               icon: Icons.person_outline,
               title: 'Account',
               onTap: () {
-                Navigator.pushReplacement(
+                Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => AccountPage(), // Halaman Sign Up
+                    builder: (context) => AccountPage(
+                      onNavigateTap: (index) {
+                        // Logic ke pengaturan jika perlu
+                      },
+                    ),
                   ),
                 );
               },
@@ -52,10 +56,12 @@ class _SettingsPageState extends State<SettingsPage> {
               icon: Icons.solar_power,
               title: 'Penukaran Poin',
               onTap: () {
-                Navigator.pushReplacement(
+                // Navigasi ke halaman Penukaran Poin
+                Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => PenukaranPoinPage(), // Halaman Sign Up
+                    builder: (context) =>
+                        PenukaranPoinPage(), // Halaman Penukaran Poin
                   ),
                 );
               },
@@ -114,10 +120,9 @@ class _SettingsPageState extends State<SettingsPage> {
               icon: Icons.logout,
               title: 'Logout',
               onTap: () async {
-                // Logic untuk logout
                 await FirebaseAuth.instance.signOut();
                 // Navigasi kembali ke halaman login atau homepage
-                Navigator.pop(context);
+                Navigator.pop(context); // Kembali ke halaman sebelumnya
               },
             ),
           ],
@@ -127,7 +132,6 @@ class _SettingsPageState extends State<SettingsPage> {
   }
 
   void handleTap(String title) {
-    // Logika jika perlu dalam kategori yang lebih spesifik
     print('Navigating to: $title');
   }
 }

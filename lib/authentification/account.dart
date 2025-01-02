@@ -6,6 +6,12 @@ import 'edit_profile.dart';
 import 'setting.dart'; // Pastikan Anda sudah memiliki halaman ini
 
 class AccountPage extends StatefulWidget {
+  final Function(int) onNavigateTap;
+
+  AccountPage({
+    required this.onNavigateTap,
+  });
+
   @override
   _AccountPageState createState() => _AccountPageState();
 }
@@ -13,12 +19,13 @@ class AccountPage extends StatefulWidget {
 class _AccountPageState extends State<AccountPage> {
   String? fullName;
   String? gender;
+  String? age; // Menambahkan umur
   String? phone;
 
   @override
   void initState() {
     super.initState();
-    fetchUserProfile();
+    fetchUserProfile(); // Panggil fungsi saat state diinisialisasi
   }
 
   Future<void> fetchUserProfile() async {
@@ -34,6 +41,7 @@ class _AccountPageState extends State<AccountPage> {
         setState(() {
           fullName = data['fullName'];
           gender = data['gender'];
+          age = data['age']; // Ambil umur
           phone = data['phone'];
         });
       }
@@ -48,21 +56,18 @@ class _AccountPageState extends State<AccountPage> {
         backgroundColor: Colors.white,
         elevation: 0,
         leading: IconButton(
-          icon: const Icon(Icons.settings,
-              color: Colors.black), // Ganti ikon menjadi ikon pengaturan
+          icon:
+              const Icon(Icons.arrow_back, color: Colors.black), // Ikon kembali
           onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) =>
-                      SettingsPage()), // Pindah ke halaman pengaturan
-            );
+            Navigator.pop(context);
           },
         ),
       ),
-      body: Padding(
+      body: Container(
+        color: Colors.white, // Background putih
         padding: const EdgeInsets.all(16.0),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             GestureDetector(
               onTap: () async {
@@ -74,7 +79,6 @@ class _AccountPageState extends State<AccountPage> {
                     ),
                   ),
                 );
-                fetchUserProfile(); // Fetch updated profile data after returning
               },
               child: Container(
                 padding: const EdgeInsets.all(16.0),
@@ -102,14 +106,14 @@ class _AccountPageState extends State<AccountPage> {
                         ),
                         const SizedBox(height: 4),
                         Text(
-                          "Gender - ${gender ?? 'Tidak diketahui'}",
+                          "Gender: ${gender ?? 'Tidak diketahui'}",
                           style: const TextStyle(
                             color: Colors.white70,
                             fontSize: 14,
                           ),
                         ),
                         Text(
-                          "Phone - ${phone ?? 'Tidak tersedia'}",
+                          "Age: ${age ?? 'Tidak diketahui'}",
                           style: const TextStyle(
                             color: Colors.white70,
                             fontSize: 14,
@@ -122,21 +126,18 @@ class _AccountPageState extends State<AccountPage> {
               ),
             ),
             const SizedBox(height: 24),
-            const Align(
-              alignment: Alignment.centerLeft,
-              child: Text(
-                "Account Details",
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                ),
+            const Text(
+              "Account Details",
+              style: TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
               ),
             ),
             const SizedBox(height: 16),
             // General Info
             SettingsTile(
               icon: Icons.person_outline,
-              title: "General Info",
+              title: "General info",
               onTap: () {
                 Navigator.push(
                   context,
@@ -146,7 +147,7 @@ class _AccountPageState extends State<AccountPage> {
                 );
               },
             ),
-            const Divider(),
+            const Divider(), // Garis pemisah untuk "General Info"
             // Password
             SettingsTile(
               icon: Icons.lock_outline,
@@ -155,15 +156,16 @@ class _AccountPageState extends State<AccountPage> {
                 // Pindah ke halaman Password
               },
             ),
-            const Divider(),
+            const Divider(), // Garis pemisah untuk "Password"
             // Contact Info
             SettingsTile(
               icon: Icons.email_outlined,
-              title: "Contact Info",
+              title: "Contact info",
               onTap: () {
                 // Pindah ke halaman Contact Info
               },
             ),
+            const Divider(), // Garis pemisah untuk "Contact info"
           ],
         ),
       ),
@@ -186,14 +188,25 @@ class SettingsTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      leading: Icon(icon, color: Colors.black),
-      title: Text(title,
-          style: const TextStyle(fontSize: 16, color: Colors.black)),
-      trailing:
-          const Icon(Icons.arrow_forward_ios, size: 16, color: Colors.grey),
+      leading: Icon(icon, color: Colors.grey),
+      title: Text(
+        title,
+        style: const TextStyle(
+          fontSize: 16,
+          fontWeight: FontWeight.w400,
+          color: Colors.black,
+        ),
+      ),
+      trailing: const Icon(
+        Icons.arrow_forward_ios,
+        size: 16,
+        color: Colors.grey,
+      ),
       onTap: onTap,
       tileColor: Colors.white,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0)),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(8.0),
+      ),
     );
   }
 }

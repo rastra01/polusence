@@ -62,10 +62,7 @@ class PenukaranPoinPage extends StatelessWidget {
           icon: const Icon(Icons.arrow_back),
           onPressed: () {
             // Arahkan ke halaman tertentu, misalnya Halaman Utama
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => SettingsPage()),
-            );
+            Navigator.pop(context);
           },
         ),
       ),
