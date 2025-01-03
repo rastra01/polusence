@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:coba2/formlapor.dart';
-import 'services/air_quality_service.dart'; // Import service Anda
+import 'services/air_quality_service.dart';
+import 'artikel.dart'; // Import service Anda
 
 
 
@@ -303,69 +304,90 @@ Widget _buildColorBox(Color color, String label) {
     );
   }
 
-  Widget _buildArticleSection() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          'Artikel Terkait',
-          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+ Widget _buildArticleSection() {
+  return Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      Text(
+        'Artikel Terkait',
+        style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+      ),
+      SizedBox(height: 8),
+      // Slider Artikel
+      SingleChildScrollView(
+        scrollDirection: Axis.horizontal,
+        child: Row(
+          children: [
+            _buildImageCard('12 Dampak polusi udara bagi kesehatan',
+                'assets/polusi1.jpg'),
+            SizedBox(width: 16),
+            _buildImageCard('10 tips mengurangi dampak polusi udara',
+                'assets/polusi2.jpg'),
+            SizedBox(width: 16),
+            _buildImageCard('5 Langkah sederhana menjaga kualitas udara',
+                'assets/polusi3.jpg'),
+            SizedBox(width: 16),
+            _buildImageCard(
+                'Bahaya polusi udara untuk anak-anak', 'assets/polusi4.jpg'),
+          ],
         ),
-        SizedBox(height: 8),
-        SingleChildScrollView(
-          scrollDirection: Axis.horizontal,
-          child: Row(
-            children: [
-              _buildImageCard('12 Dampak polusi udara bagi kesehatan',
-                  'assets/polusi1.png'),
-              SizedBox(width: 16),
-              _buildImageCard('10 tips mengurangi dampak polusi udara',
-                  'assets/polusi2.png'),
-              SizedBox(width: 16),
-              _buildImageCard('5 Langkah sederhana menjaga kualitas udara',
-                  'assets/polusi2.png'),
-              SizedBox(width: 16),
-              _buildImageCard(
-                  'Bahaya polusi udara untuk anak-anak', 'assets/polusi1.png'),
-            ],
+      ),
+      SizedBox(height: 8),
+      // Tombol "Lainnya"
+      GestureDetector(
+        onTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => ArtikelPage()),
+          );
+        },
+        child: Text(
+          'Lihat lainnya',
+          style: TextStyle(
+            fontSize: 16,
+            fontWeight: FontWeight.bold,
+            color: Colors.blue,
+            decoration: TextDecoration.underline,
           ),
         ),
-      ],
-    );
-  }
+      ),
+    ],
+  );
+}
 
-  Widget _buildImageCard(String title, String imagePath) {
-    return Container(
-      width: 240,
-      height: 180,
+Widget _buildImageCard(String title, String imagePath) {
+  return Container(
+    width: 240,
+    height: 180,
+    decoration: BoxDecoration(
+      borderRadius: BorderRadius.circular(16),
+      image: DecorationImage(
+        image: AssetImage(imagePath),
+        fit: BoxFit.cover,
+      ),
+    ),
+    child: Container(
+      padding: EdgeInsets.all(16),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(16),
-        image: DecorationImage(
-          image: AssetImage(imagePath),
-          fit: BoxFit.cover,
+        gradient: LinearGradient(
+          colors: [Colors.black.withOpacity(0.5), Colors.transparent],
+          begin: Alignment.bottomCenter,
+          end: Alignment.topCenter,
         ),
       ),
-      child: Container(
-        padding: EdgeInsets.all(16),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(16),
-          gradient: LinearGradient(
-            colors: [Colors.black.withOpacity(0.5), Colors.transparent],
-            begin: Alignment.bottomCenter,
-            end: Alignment.topCenter,
-          ),
-        ),
-        child: Align(
-          alignment: Alignment.bottomLeft,
-          child: Text(
-            title,
-            style: TextStyle(
-                color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold),
-          ),
+      child: Align(
+        alignment: Alignment.bottomLeft,
+        child: Text(
+          title,
+          style: TextStyle(
+              color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold),
         ),
       ),
-    );
-  }
+    ),
+  );
+}
+
 
   Widget _buildReportSection(BuildContext context) {
     return Column(

@@ -64,14 +64,18 @@ flutter:
     - assets/google.png
     - assets/twitter.png
     - assets/profile_picture.png
-    - assets/polusi1.png
-    - assets/polusi2.png
     - assets/report_icon.png
     - assets/indomaret.png
     - assets/alfamart.png
     - assets/superindo.png
     - assets/barcode.png
     - assets/pabrik.jpeg
+    - assets/polusi1.jpg
+    - assets/polusi2.jpg
+    - assets/polusi3.jpg
+    - assets/polusi4.jpg
+    - assets/polusi5.jpg
+    - assets/polusi6.jpg
 
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
