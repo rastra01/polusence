@@ -1,4 +1,9 @@
 import 'package:flutter/material.dart';
+import 'penukaranPoin.dart'; // Pastikan ini merefer ke file yang berisi PenukaranPoinPage
+
+void main() {
+  runApp(ChallengeApp());
+}
 
 class ChallengeApp extends StatelessWidget {
   @override
@@ -33,6 +38,8 @@ class _ChallengeScreenState extends State<ChallengeScreen> {
     Challenge("Melakukan penukaran poin", 35, false, Colors.orange.shade100),
     Challenge("Melakukan Backflip", 5, false, Colors.green.shade100),
   ];
+
+  int currentPoints = 147; // Poin awal
 
   void showChallengeDetails(Challenge challenge) {
     showModalBottomSheet(
@@ -74,6 +81,14 @@ class _ChallengeScreenState extends State<ChallengeScreen> {
     );
   }
 
+  void goToPoinPage() {
+    // Arahkan ke halaman Penukaran Poin
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => PenukaranPoinPage()),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -110,48 +125,40 @@ class _ChallengeScreenState extends State<ChallengeScreen> {
                     Container(
                       padding: EdgeInsets.all(8.0),
                       color: Colors.white,
-                      child: Text(
-                        "28\nMinggu",
-                        textAlign: TextAlign.center,
-                        style: TextStyle(color: Colors.black),
-                      ),
+                      child: Text("28\nMinggu",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(color: Colors.black)),
                     ),
                     Container(
                       padding: EdgeInsets.all(8.0),
                       color: Colors.white,
-                      child: Text(
-                        "29\nSenin",
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                            color: Colors.black, fontWeight: FontWeight.bold),
-                      ),
+                      child: Text("29\nSenin",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                              color: Colors.black,
+                              fontWeight: FontWeight.bold)),
                     ),
                     Container(
                       padding: EdgeInsets.all(8.0),
                       color: Colors.white,
-                      child: Text(
-                        "30\nSelasa",
-                        textAlign: TextAlign.center,
-                        style: TextStyle(color: Colors.black),
-                      ),
+                      child: Text("30\nSelasa",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(color: Colors.black)),
                     ),
                     Container(
                       padding: EdgeInsets.all(8.0),
                       color: Colors.white,
-                      child: Text(
-                        "1\nRabu",
-                        textAlign: TextAlign.center,
-                        style: TextStyle(color: Colors.black),
-                      ),
+                      child: Text("1\nRabu",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(color: Colors.black)),
                     ),
                   ],
                 ),
                 SizedBox(height: 16),
                 PoinWidget(
-                  poin: 147,
+                  poin: currentPoints,
                   onTukarPoin: () {
-                    // Tambahkan logika untuk Tukar Poin di sini
-                    print("Tukar Poin ditekan!");
+                    goToPoinPage(); // Panggil fungsi untuk berpindah ke halaman Penukaran
                   },
                 ),
               ],
@@ -218,12 +225,11 @@ class PoinWidget extends StatelessWidget {
       alignment: Alignment.center,
       children: [
         Container(
-          height: 120, // Memberi ruang lebih agar elemen tidak terpotong
+          height: 120,
           color: Colors.green,
         ),
         Positioned(
-          top:
-              30, // Jarak dari bagian atas agar tidak masuk ke dalam Container hijau
+          top: 30,
           child: Card(
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(16),
